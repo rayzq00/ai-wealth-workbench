@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="./favicon.svg" />
+  <title>AI 财富管理工作台｜体验设计方案与 AI 协作记录</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #1f2328;
+      --muted: #656d76;
+      --line: #d0d7de;
+      --soft-line: #d8dee4;
+      --canvas: #f6f8fa;
+      --blue: #0969da;
+      --blue-soft: #ddf4ff;
+      --purple: #5751ff;
+      --purple-soft: #f1efff;
+      --green: #1a7f37;
+      --green-soft: #dafbe1;
+      --orange: #9a6700;
+      --orange-soft: #fff8c5;
+      --red: #cf222e;
+      --red-soft: #ffebe9;
+      --radius: 8px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: #fff;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    }
+    a { color: var(--blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    code, pre { font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255,255,255,.94);
+      backdrop-filter: blur(12px);
+    }
+    .topbar-inner {
+      width: min(1080px, calc(100% - 40px));
+      height: 58px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 650; }
+    .brand-mark {
+      width: 26px;
+      height: 26px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      border-radius: 7px;
+      background: linear-gradient(135deg, var(--purple), #8b7cff);
+      font-size: 15px;
+    }
+    .top-actions { display: flex; gap: 16px; font-size: 14px; }
+
+    main { width: min(980px, calc(100% - 40px)); margin: 0 auto; padding: 56px 0 88px; }
+    .hero { padding-bottom: 36px; border-bottom: 1px solid var(--line); }
+    .eyebrow { margin: 0 0 12px; color: var(--purple); font-weight: 650; font-size: 14px; }
+    h1 { margin: 0; font-size: clamp(32px, 5vw, 48px); line-height: 1.22; letter-spacing: -.03em; }
+    .lead { max-width: 780px; margin: 18px 0 0; color: #434a54; font-size: 18px; }
+    .hero-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      min-height: 36px;
+      padding: 0 14px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--canvas);
+      color: var(--ink);
+      font-weight: 600;
+      font-size: 14px;
+    }
+    .button.primary { border-color: var(--blue); background: var(--blue); color: #fff; }
+    .button:hover { text-decoration: none; filter: brightness(.98); }
+
+    nav.toc { margin: 30px 0 48px; padding: 18px 22px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--canvas); }
+    nav.toc strong { display: block; margin-bottom: 8px; }
+    nav.toc ol { margin: 0; padding-left: 21px; columns: 2; column-gap: 48px; }
+
+    section { margin-top: 52px; scroll-margin-top: 80px; }
+    h2 { margin: 0 0 16px; padding-bottom: 4px; font-size: 26px; line-height: 1.35; }
+    h3 { margin: 30px 0 12px; font-size: 19px; }
+    h4 { margin: 0 0 7px; font-size: 16px; }
+    p { margin: 10px 0; }
+    .section-intro { color: var(--muted); margin-top: -10px; }
+    blockquote { margin: 18px 0; padding: 2px 16px; border-left: 4px solid var(--line); color: #434a54; }
+
+    .tool-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .tool-card { padding: 20px; border: 1px solid var(--line); border-radius: var(--radius); }
+    .tool-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .tool-index { color: var(--muted); font: 600 13px/1 ui-monospace, monospace; }
+    .tool-card ul { margin: 12px 0 0; padding-left: 20px; }
+    .tool-card li + li { margin-top: 6px; }
+    .tag { display: inline-flex; padding: 2px 8px; border-radius: 999px; font-size: 12px; font-weight: 600; }
+    .tag.purple { color: #4c38b5; background: var(--purple-soft); }
+    .tag.blue { color: #0550ae; background: var(--blue-soft); }
+    .tag.green { color: var(--green); background: var(--green-soft); }
+    .tag.orange { color: var(--orange); background: var(--orange-soft); }
+
+    .prompt-card { margin-top: 18px; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+    .prompt-head { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 13px 16px; border-bottom: 1px solid var(--line);  }
+    .prompt-head strong { font-size: 16px; }
+    .prompt-body { padding: 18px; }
+    .prompt-shot {
+      display: block;
+      width: 100%;
+      height: auto;
+      margin: 0 0 18px;
+      border: 1px solid var(--soft-line);
+      border-radius: 7px;
+      background: var(--canvas);
+    }
+    .prompt {
+      position: relative;
+      margin: 0 0 18px;
+      padding: 12px;
+      border-radius: 7px;
+      background: transparent ;
+      white-space: pre-wrap;
+      color: #343941;
+      font-size: 14px;
+      line-height: 1.65;
+      font-family: ;
+    }
+    /* .prompt::before { content: ">"; position: absolute; left: 18px; color: var(--purple); font-weight: 700; } */
+    .decision-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .decision { padding: 14px 16px; border-radius: 7px; background: #fff; border: 1px solid var(--soft-line); }
+    .decision.adopt { background: #b2f7c326;  }
+    .decision.modify {  background: #ffa24c15;}
+    .decision p { margin: 5px 0 0; color: #4b535d; font-size: 14px; }
+
+    .problem-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .problem-item { padding: 16px; border: 1px solid var(--line); border-radius: var(--radius); }
+    .problem-item b { display: block; margin-bottom: 6px; }
+    .problem-item span { color: var(--muted); font-size: 14px; }
+
+    .diagram { margin: 18px 0; padding: 20px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--canvas); overflow-x: auto; }
+    .diagram-caption { margin-bottom: 16px; color: var(--muted); font-size: 13px; }
+    .flow { min-width: 860px; display: flex; align-items: stretch; gap: 8px; }
+    .flow-step { position: relative; flex: 1; min-width: 110px; padding: 13px 12px; border: 1px solid var(--line); border-radius: 7px; background: #fff; }
+    .flow-step:not(:last-child)::after { content: "→"; position: absolute; right: -15px; top: 50%; z-index: 2; transform: translateY(-50%); color: #8c959f; font-weight: 700; }
+    .flow-step small { display: block; margin-bottom: 6px; color: var(--purple); font-weight: 700; }
+    .flow-step b { display: block; font-size: 14px; line-height: 1.4; }
+    .flow-step span { display: block; margin-top: 5px; color: var(--muted); font-size: 12px; line-height: 1.45; }
+    .flow-step.ai { border-color: #c7c2ff; background: #fbfaff; }
+    .flow-step.human { border-color: #b6d7ff; }
+
+    .ia { display: grid; grid-template-columns: 150px 1fr; gap: 14px; min-width: 720px; }
+    .ia-nav, .ia-page { border: 1px solid var(--line); border-radius: 7px; background: #fff; }
+    .ia-nav { padding: 14px; }
+    .ia-nav b { display: block; padding: 8px 9px; border-radius: 5px; background: var(--blue-soft); }
+    .ia-nav span { display: block; padding: 8px 9px; color: #4b535d; }
+    .ia-page { padding: 14px; }
+    .ia-page > b { display: block; margin-bottom: 11px; }
+    .ia-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+    .ia-block { min-height: 66px; padding: 10px; border: 1px dashed #afb8c1; border-radius: 6px; color: #4b535d; font-size: 12px; background: #fff; }
+    .ia-block.ai { border-style: solid; border-color: #cbc7ff; background: var(--purple-soft); color: #4c38b5; }
+    .ia-block.wide { grid-column: 1 / -1; }
+    .ia-block.double { grid-column: span 3;border-style: solid; border-color: #cbc7ff; background: var(--purple-soft); color: #4c38b5; }
+    .ia-detail { min-width: 720px; }
+    .ia-detail-head {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .ia-detail-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 2.5fr) minmax(190px, .9fr);
+      gap: 8px;
+    }
+    .ia-detail-main {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .ia-detail-main .wide { grid-column: 1 / -1; }
+    .ia-detail-side {
+      display: grid;
+      align-content: start;
+      gap: 8px;
+      padding: 10px;
+      border: 1px solid #cbc7ff;
+      border-radius: 6px;
+      background: #fbfaff;
+    }
+    .ia-detail-side .ia-block { min-height: 48px; }
+
+    .wireframe-grid { display: grid; grid-template-columns: 1.08fr .92fr; gap: 16px; }
+    .wireframe { padding: 12px; border: 1px solid #8c959f; border-radius: 8px; background: #fff; }
+    .window-bar { display: flex; gap: 5px; padding-bottom: 10px; border-bottom: 1px solid var(--soft-line); }
+    .window-bar i { width: 7px; height: 7px; border-radius: 50%; background: #afb8c1; }
+    .wf-title { height: 16px; width: 38%; margin: 13px 0 10px; border-radius: 3px; background: #57606a; }
+    .wf-summary { height: 42px; border: 1px solid #cbc7ff; border-radius: 5px; background: linear-gradient(90deg, #f3f1ff, #eefbfb); }
+    .wf-metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin: 8px 0; }
+    .wf-metrics i { height: 35px; border: 1px solid var(--soft-line); border-radius: 4px; }
+    .wf-columns { display: grid; grid-template-columns: 2.6fr 1fr; gap: 7px; }
+    .wf-list, .wf-action { height: 128px; border: 1px solid var(--soft-line); border-radius: 5px; background: repeating-linear-gradient(#fff 0 24px, #eaeef2 25px 26px); }
+    .wf-chart { height: 75px; margin-top: 8px; border: 1px solid var(--soft-line); border-radius: 5px; position: relative; overflow: hidden; }
+    .wf-chart::after { content: ""; position: absolute; inset: 20px 8px 8px; border-top: 3px solid #54aeff; transform: skewY(-5deg); }
+    .wf-detail { display: grid; grid-template-columns: 1fr 33%; gap: 8px; }
+    .wf-profile { height: 40px; border-bottom: 1px solid var(--soft-line); }
+    .wf-risk { height: 35px; margin: 8px 0; border: 1px solid #cbc7ff; border-radius: 5px; background: var(--purple-soft); }
+    .wf-assets { height: 132px; border: 1px solid var(--soft-line); border-radius: 5px; background: linear-gradient(145deg, transparent 55%, #ddf4ff 56%); }
+    .wf-panel { height: 223px; padding: 9px; border-left: 1px solid #cbc7ff; background: #fbfaff; }
+    .wf-steps { height: 16px; border-bottom: 2px solid #8b84ff; }
+    .wf-option { height: 28px; margin-top: 9px; border: 1px solid #cbc7ff; border-radius: 4px; background: #fff; }
+    .wf-button { height: 28px; margin-top: 47px; border-radius: 4px; background: var(--purple); }
+    .wireframe figcaption { margin-top: 10px; color: var(--muted); font-size: 13px; }
+
+    table { width: 100%; border-spacing: 0; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+    th, td { padding: 11px 13px; border: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { background: var(--canvas); font-weight: 650; }
+    td:first-child { white-space: nowrap; font-weight: 600; }
+
+    .principles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; counter-reset: principle; }
+    .principle { padding: 18px; border-top: 3px solid var(--blue); border-radius: 5px; background: var(--canvas); }
+    .principle::before { counter-increment: principle; content: "0" counter(principle); display: block; margin-bottom: 9px; color: var(--muted); font: 600 12px/1 ui-monospace, monospace; }
+    .principle b { display: block; margin-bottom: 6px; }
+    .principle span { color: var(--muted); font-size: 14px; }
+
+    .result { margin-top: 28px; padding: 20px; border: 1px solid #c7c2ff; border-radius: var(--radius); background: linear-gradient(110deg, #f7f5ff, #f1fbff); }
+    .result strong { color: #4c38b5; }
+    .note { padding: 14px 16px; border: 1px solid #f2cc60; border-radius: 7px; background: #fff8c5; color: #5d4a00; }
+
+    footer { margin-top: 64px; padding-top: 22px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
+
+    @media (max-width: 760px) {
+      .topbar-inner, main { width: min(100% - 28px, 980px); }
+      .top-actions a:first-child { display: none; }
+      main { padding-top: 36px; }
+      nav.toc ol { columns: 1; }
+      .tool-grid, .decision-grid, .problem-grid, .wireframe-grid, .principles { grid-template-columns: 1fr; }
+      .ia-row { grid-template-columns: repeat(2, 1fr); }
+      .ia-block.double { grid-column: span 2; }
+      table { display: block; overflow-x: auto; }
+    }
+
+    @media print {
+      .topbar { position: static; }
+      main { width: 100%; padding: 20px; }
+      section, .prompt-card, .diagram, table { break-inside: avoid; }
+      .hero-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+  
+
+  <main>
+    <header class="hero">
+      
+      <h1>AI 财富管理工作台 - 设计说明</h1>
+      
+      <div class="hero-links">
+        <a class="button primary" href="https://rayzq00.github.io/ai-wealth-workbench/" target="_blank">体验交互 Demo</a>
+        
+      </div>
+    </header>
+
+    <!-- <nav class="toc" aria-label="目录">
+      <strong>目录</strong>
+      <ol>
+        <li><a href="#tools">AI 工具与分工</a></li>
+        <li><a href="#prompts">关键 Prompt 与取舍</a></li>
+        <li><a href="#solution">方案阐述</a></li>
+        <li><a href="#flow">关键交互流程</a></li>
+        <li><a href="#wireframe">核心页面线框</a></li>
+        <li><a href="#ai-value">AI 如何提升效率</a></li>
+      </ol>
+    </nav> -->
+
+    <section id="tools">
+      <h2>01. AI 工具与分工</h2>
+      
+      <div class="tool-grid">
+        <article class="tool-card">
+          <div class="tool-head"><h3 style="margin:0">ChatGPT</h3><span class="tag blue">研究与推演</span></div>
+          <ul>
+            <li>拆解题目中的角色、目标、信息与业务闭环。</li>
+            <li>协助调研 Salesforce Financial Services Cloud、OneVest、百度相关智能财富产品等参考案例。</li>
+            
+          </ul>
+        </article>
+        <article class="tool-card">
+          <div class="tool-head"><h3 style="margin:0">Codex</h3><span class="tag purple">原型与验证</span></div>
+          <ul>
+            <li>使用 React、TypeScript 与 Ant Design 编写高保真交互 Demo。</li>
+            
+            <li>根据逐轮设计反馈调整布局、视觉层级、响应式适配并部署 GitHub Pages。</li>
+          </ul>
+        </article>
+      </div>
+      
+    </section>
+
+    <section id="prompts">
+      <h2>02. 关键 Prompt 与 AI 辅助过程</h2>
+      
+
+      <article class="prompt-card">
+        <div class="prompt-head"><strong>Prompt 1｜先建立行业参照系</strong><span class="tag blue">Discover</span></div>
+        <div class="prompt-body">
+          <img class="prompt-shot" src="./prompt1.png" alt="Prompt 1：基于竞品参考搭建 AI 财富顾问工作台交互 Demo" />
+          <div class="decision-grid">
+            <div class="decision adopt"><h4>采用</h4><p>采用 AI 给出的“总览—风险—行动—服务建议”整体框架，并用 React + Ant Design 快速生成可点击原型；参考竞品中的资产分布、任务清单和侧边协作区，建立第一版信息骨架。</p></div>
+            <div class="decision modify"><h4>修改</h4><p>参考图只用于提取结构，没有照搬视觉和产品逻辑。将普通 B 端操作保留为 Ant Design 蓝色，AI 内容单独使用紫色；同时把数据、客户与服务情境改成中国财富管理语境。</p></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="prompt-card">
+        <div class="prompt-head"><strong>Prompt 2｜用真实案例推演业务闭环</strong><span class="tag green">Define</span></div>
+        <div class="prompt-body">
+          <img class="prompt-shot" src="./prompt2.png" alt="Prompt 2：推演流动性风险从识别到完成跟进的业务流程" />
+          <div class="decision-grid">
+            <div class="decision adopt"><h4>采用</h4><p>采用 AI 梳理的完整服务闭环：自动识别与排序风险，顾问核实风险，AI 生成方案和沟通材料，联系客户后保存纪要、建立后续任务并持续监测。</p></div>
+            <div class="decision modify"><h4>修改</h4><p>将长流程拆到不同交互层级：风险抽屉只负责解释和快速分诊，客户详情承载完整资产上下文，AI 服务侧栏负责方案推进。AI 不自动执行交易，关键事实和最终选择均由顾问确认。</p></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="prompt-card">
+        <div class="prompt-head"><strong>Prompt 3｜把服务流程做成可操作原型</strong><span class="tag purple">Deliver</span></div>
+        <div class="prompt-body">
+          <img class="prompt-shot" src="./prompt3.png" alt="Prompt 3：基于第一版 Demo 细化导航、摘要、风险队列和处理抽屉" />
+          <div class="decision-grid">
+            <div class="decision adopt"><h4>采用</h4><p>采用 AI 对修改意见的结构化落实：精简一级导航，重构 AI 摘要和四项核心指标，建立风险分类、优先级和金额影响，并补齐风险抽屉、推荐行动与客户资产全景。</p></div>
+            <div class="decision modify"><h4>修改</h4><p>经过实际浏览后，将风险表格改为更适合连续扫描的列表；继续统一中文姓名、人民币和本土服务文案，并把后续服务流程收敛为“确定方向—生成方案—保存纪要”三步侧栏。</p></div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section id="solution">
+      <h2>03. 方案阐述</h2>
+      
+      <h3>信息架构</h3>
+      <div class="diagram">
+        
+        <div class="ia">
+          <div class="ia-nav">
+            <b>工作台</b>
+            <span>客户中心</span>
+          </div>
+          <div class="ia-page">
+            <b>工作台</b>
+            <div class="ia-row">
+              <div class="ia-block ai wide"><b>AI 智能摘要 —— 快速判断</b></div>
+              <div class="ia-block">核心指标</div><div class="ia-block">核心指标</div><div class="ia-block">核心指标</div><div class="ia-block">核心指标</div>
+              <div class="ia-block double">AI 风险</div>
+              <div class="ia-block ai">AI 推荐行动</div>
+              <div class="ia-block wide">客户全景看板 —— 数据来源</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="diagram">
+        <div class="diagram-caption"><b>客户详情页：</b>完整客户上下文与 AI 服务流程并列呈现，从理解客户进入服务推进。</div>
+        <div class="ia-detail">
+          <div class="ia-detail-head">
+            <div class="ia-block"><b>← 返回客户中心</b></div>
+            
+          </div>
+          <div class="ia-detail-grid">
+            <div class="ia-detail-main">
+              <div class="ia-block ai wide"><b>风险警告</b></div>
+              <div class="ia-block wide"><b>概览　｜　详细资料　｜　文档</b></div>
+              <div class="ia-block"><b>资产配置</b></div>
+              <div class="ia-block"><b>资产变化趋势</b></div>
+              <div class="ia-block wide"><b>本机构持仓明细</b></div>
+            </div>
+            <aside class="ia-detail-side">
+              <b>AI 服务助手</b>
+              <div class="ia-block ai">01　确定方向<br></div>
+              <div class="ia-block">02　生成方案<br></div>
+              <div class="ia-block">03　保存纪要<br></div>
+            </aside>
+          </div>
+        </div>
+      </div>
+      <h3>关键交互流程</h3>
+<div class="flow">
+          <div class="flow-step ai"><small>01 · AI</small><b>持续扫描数据</b><span>账户、现金流、大额支出、服务记录</span></div>
+          <div class="flow-step ai"><small>02 · AI</small><b>识别并排序风险</b><span>预计缺口 16.8 万元，21 天后付款</span></div>
+          <div class="flow-step human"><small>03 · 顾问</small><b>抽屉快速分诊</b><span>查看依据、紧迫程度与资料来源</span></div>
+          <div class="flow-step human"><small>04 · 顾问</small><b>选择处理方式</b><span>直接联系，或查看智能方案</span></div>
+          <div class="flow-step ai"><small>05 · AI + 顾问</small><b>确定服务方向</b><span>核实他行资金 / 评估赎回 / 组合安排</span></div>
+          <div class="flow-step ai"><small>06 · AI</small><b>生成跟进材料</b><span>沟通文案、待确认事项、材料清单</span></div>
+          <div class="flow-step human"><small>07 · 顾问</small><b>联系并保存纪要</b><span>记录结果、下次日期，风险状态闭环</span></div>
+        </div>
+      <h3>AI 如何提升判断与跟进效率</h3>
+      <table>
+        <thead><tr><th>工作阶段</th><th>原有摩擦</th><th>AI 提效方式</th><th>顾问控制点</th></tr></thead>
+        <tbody>
+          <tr><td>发现</td><td>依赖人工逐户查看，容易遗漏跨账户信号。</td><td>持续扫描资产、现金流、目标与互动记录，聚合为风险事件。</td><td>确认数据范围与风险是否成立。</td></tr>
+          <tr><td>判断</td><td>风险数量多，缺少统一排序依据。</td><td>同时给出影响金额、时间窗口、风险来源与 AI 优先级。</td><td>决定立即处理、稍后跟进或忽略。</td></tr>
+          <tr><td>准备</td><td>需要手工整理客户全量信息并拟定多个方案。</td><td>结合资产结构生成可比较的服务方向和待确认问题。</td><td>选择方向、调整沟通重点与表达口径。</td></tr>
+          <tr><td>沟通</td><td>话术与材料重复准备，质量依赖个人经验。</td><td>生成沟通文案、材料清单和客户适配的说明。</td><td>复核内容并选择合适渠道发起联系。</td></tr>
+          <tr><td>留痕</td><td>沟通结束后容易漏记结果和后续日期。</td><td>结构化记录沟通结果，更新风险状态并建立下次跟进。</td><td>确认纪要准确后保存。</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    
+
+  </main>
+</body>
+</html>
