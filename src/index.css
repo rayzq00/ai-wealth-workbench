@@ -1,0 +1,83 @@
+:root {
+  --color-primary: #1677ff;
+  --color-ai: #6b5cff;
+  --color-ai-deep: #4939db;
+  --color-ai-cyan: #2fb8c6;
+  --color-text: #25283b;
+  --color-text-secondary: #74788f;
+  --color-text-tertiary: #a0a3b3;
+  --color-border: #ececf3;
+  --color-canvas: #f7f8fa;
+  --color-surface: #ffffff;
+  --color-risk: #e55968;
+  --color-warning: #e39a42;
+  --color-success: #329a7b;
+  --sidebar-width: 208px;
+  --sidebar-collapsed-width: 64px;
+  --radius-sm: 8px;
+  --radius-lg: 12px;
+  --shadow-card: 0 8px 26px rgba(29, 30, 59, 0.012);
+  --shadow-float: 0 20px 50px rgba(24, 26, 57, 0.15);
+  font-family: Inter, 'SF Pro Display', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  color: var(--color-text);
+  background: var(--color-canvas);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 1180px;
+  min-height: 100%;
+  background: var(--color-canvas);
+}
+
+body {
+  margin: 0;
+  min-width: 1180px;
+  min-height: 100vh;
+  background: var(--color-canvas);
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d7d8e3;
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #bfc1cf;
+}
+
+::selection {
+  color: #fff;
+  background: rgba(107, 92, 255, 0.8);
+}

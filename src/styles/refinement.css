@@ -1,0 +1,165 @@
+/* Task-first SaaS refinement. Ant Design base; violet reserved for AI. */
+:root {
+  --color-text-secondary: #657185;
+  --color-text-tertiary: #778397;
+  --color-border: #e9edf3;
+  --radius-lg: 8px;
+  --shadow-card: 0 2px 10px rgba(29,30,59,.012);
+  --ui-label: 13px;
+  --ui-body: 14px;
+  --ui-title: 16px;
+}
+.wealth-app { font-size:var(--ui-body); line-height:1.6; }
+.ds-page-title.ant-typography { font-size:22px; font-weight:600; letter-spacing:-.3px; }
+.card-title-row h3 { font-size:var(--ui-title); font-weight:600; }
+.distribution-heading h3 { font-size:14px; font-weight:600; }
+.wealth-app .ant-card { border-radius:var(--radius-lg); box-shadow:var(--shadow-card); }
+.wealth-app .ant-btn { font-size:var(--ui-label); font-weight:500; }
+.wealth-app .ant-btn-sm { min-height:28px; }
+.ant-tag.ant-tag-success,
+.ant-tag.ant-tag-green,
+.success-tag.ant-tag,
+.risk-priority.is-low.ant-tag {
+  color:#21835f !important;
+  background:#f2fbf7 !important;
+  border-color:#d8f0e5 !important;
+  box-shadow:none !important;
+}
+.wealth-app .customer-avatar.ant-avatar { border-width:1px; border-style:solid; font-size:16px; font-weight:600; }
+button:focus-visible, .risk-alert-row:focus-visible { outline:2px solid var(--color-primary); outline-offset:3px; }
+.metric-card strong, .risk-impact strong, .holding-metrics strong, .client-aum, .wallet-share-cell b { font-variant-numeric:tabular-nums; letter-spacing:-.25px; }
+.metric-card.ant-card { height:84px; }
+.metric-card .ant-card-body { height:100%; min-height:0; padding:16px 16px; gap:12px; }
+.metric-card strong { font-size:24px; line-height:1.45; font-weight:600; }
+.metric-card span:not(.anticon) { font-size:var(--ui-label); color:var(--color-text-secondary); }
+.metric-value-row { display:flex; min-width:0; align-items:flex-end; gap:2px; white-space:nowrap; }
+.metric-value-row strong { flex:none; height:29px; margin:0; line-height:1.2; }
+.metric-card .metric-value-row .metric-unit { flex:none; color:var(--color-text); font-size:14px; font-weight:500; }
+.metric-value-row .metric-positive,
+.metric-value-row .metric-note { overflow:hidden; margin-left:1px; font-size:12px; line-height:1.4; text-overflow:ellipsis; }
+.metric-icon { width:32px; height:32px; border-radius:8px; font-size:17px; }
+.ai-summary-card .ant-card-body { padding:16px 16px; }
+.ai-summary-heading h2 { color:#6255d9; font-size:14px; line-height:1.65; font-weight:600; }
+.ai-summary-overview { margin:8px 0 0 0px; color:var(--color-text); font-size:15px; font-weight:500; line-height:1.7; }
+.ai-summary-lines { margin-top:8px; padding-left:0px; }
+.ai-summary-lines > div { line-height:1.3; }
+.ai-summary-lines span, .ai-summary-lines strong, .ai-summary-lines button { font-size:var(--ui-label); }
+.ai-summary-lines span { color:var(--color-text-secondary); }
+.ai-summary-mark { display:grid; width:18px; height:18px; flex:none; place-items:center; }
+.ai-summary-mark img { width:18px; height:18px; object-fit:contain; }
+.risk-list-title > strong { font-size:15px; font-weight:600; }
+.risk-list-description, .risk-impact > span { color:var(--color-text-secondary); font-size:var(--ui-label); }
+.risk-list-description { row-gap:4px; line-height:1.65; }
+.risk-impact-value { display:flex; align-items:flex-end; gap:2px; white-space:nowrap; }
+.risk-impact strong { color:var(--color-text); font-size:20px; font-weight:600; }
+.risk-impact .risk-impact-unit { margin:0 0 1px; color:var(--color-text); font-size:13px; font-weight:500; line-height:1.4; }
+.risk-alert-row { transition:background-color 140ms ease; border-bottom-color:var(--color-border); }
+.risk-alert-row:hover { background:#f8faff; }
+.risk-alert-row .customer-avatar.ant-avatar { font-size:16px; }
+.risk-alert-list, .followup-list { scrollbar-gutter:stable; overscroll-behavior:contain; }
+.followup-item > strong { font-size:14px; line-height:1.7; font-weight:600; }
+.followup-item p { color:var(--color-text-secondary); font-size:13px; line-height:1.7; margin:6px 0 12px; }
+.followup-action-row .ant-btn { font-size:13px; }
+.followup-action-row .ant-tag { font-size:11px; }
+.followup-card .card-title-row .ant-typography { font-size:13px; color:var(--color-text-secondary); }
+.analytics-section { background:transparent; border:0; border-radius:0; }
+.analytics-section.asset-distribution-section { border-top:1px solid var(--color-border); }
+.analytics-section-title strong { font-size:14px; }
+.analytics-section-title small, .chart-bar-row span, .distribution-heading p, .distribution-summary { color:var(--color-text-secondary); font-size:13px; }
+.advisor-copy span { color:var(--color-text-secondary); font-size:12px; }
+.collapse-trigger { box-shadow:0 2px 6px rgba(30,40,60,.05); }
+.client-center-header > div > .ant-typography-secondary { display:block; margin-top:6px; font-size:13px; }
+.client-directory-toolbar { padding-bottom:16px; }
+.client-directory-card .ant-table-thead > tr > th { background:#f7f9fc; color:var(--color-text-secondary); font-size:13px; font-weight:500; }
+.client-directory-card .ant-table-tbody > tr > td { padding-top:18px; padding-bottom:18px; font-size:13px; }
+.client-name-link { border:0; padding:0; background:transparent; color:var(--color-text); font-weight:600; font-size:14px; text-align:left; }
+.client-name-link:hover { color:var(--color-primary); }
+.client-name-cell > div > span, .client-center-page .ant-typography-secondary { color:var(--color-text-secondary); }
+.client-name-cell .customer-avatar.ant-avatar { font-size:16px; }
+.client-shortcut-card .ant-card-body { padding:16px 24px; }
+.client-shortcut-card .ant-btn { background:#f8faff; border-color:#e8eef9; }
+.client-detail-header { min-height:64px; }
+.client-detail-title .ant-typography { font-size:21px; font-weight:600; }
+.client-detail-page .risk-entry-context { padding:12px 16px; font-size:13px; margin:0; }
+.client-detail-tabs > .ant-tabs-nav .ant-tabs-tab { padding:12px 4px; font-size:14px; }
+.client-ai-inline { min-height:56px; padding:10px 16px; }
+.client-section-header { padding:0 24px; min-height:56px; }
+.holding-metrics { padding:20px 24px 8px; }
+.holding-metrics span { font-size:13px; color:var(--color-text-secondary); }
+.holding-metrics strong { font-size:19px; }
+.client-allocation-layout { padding:24px; gap:28px; }
+.client-allocation-legend > div { min-height:40px; font-size:13px; }
+.client-account-row { padding:18px 24px; }
+.client-account-row .account-name > span { color:var(--color-text-secondary); font-size:13px; }
+.client-tab-placeholder .ant-card-body { padding:16px; }
+.client-service-panel { top:var(--client-detail-sticky-offset); height:calc(100dvh - var(--client-detail-sticky-offset)); min-height:0; max-height:calc(100dvh - var(--client-detail-sticky-offset)); border-color:#e4e6ef; box-shadow:0 2px 12px rgba(30,40,60,.025); }
+.client-service-panel-header { padding:14px 16px; background:linear-gradient(115deg,#faf8ff,#f7fbff); }
+.client-service-panel-scroll { display:flex; min-height:0; overflow:hidden; scrollbar-gutter:stable; overscroll-behavior:contain; }
+.client-service-panel .service-workflow { box-shadow:none; }
+.client-service-panel .service-workflow .ant-card-body { padding:0; }
+.client-service-panel .ant-steps { padding-bottom:0; border-bottom:0; }
+.panel-step-heading { margin-top:16px; gap:6px; }
+.panel-step-heading strong { font-size:14px; }
+.client-service-panel .workflow-context { padding:12px 14px; margin:14px 0; background:#f7f9fc; border:1px solid var(--color-border); }
+.client-service-panel .workflow-context > strong { font-size:13px; }
+.client-service-panel .workflow-context p { font-size:13px; line-height:1.75; margin:6px 0; }
+.workflow-evidence { font-size:12px; color:var(--color-text-secondary); }
+.workflow-evidence summary { cursor:pointer; padding:4px 0; }
+.workflow-evidence span { display:block; margin-top:6px; line-height:1.7; }
+.client-service-panel .workflow-toolbar { margin:16px 0; }
+.client-service-panel .workflow-toolbar > div > strong { font-size:14px; }
+.client-service-panel .plan-grid { margin:14px 0 16px; gap:10px; }
+.client-service-panel .plan-option { padding:14px; border-color:var(--color-border); transition:border-color 140ms ease,background 140ms ease; }
+.client-service-panel .plan-option:hover { border-color:#ad9cdd; }
+.client-service-panel .plan-option.selected { background:#faf8ff; border-color:#9275e8; box-shadow:inset 3px 0 #9275e8; }
+.client-service-panel .plan-option h3 { font-size:14px; margin:8px 0; }
+.client-service-panel .plan-option p { font-size:13px; line-height:1.7; }
+.client-service-panel .plan-option div, .client-service-panel .plan-option small { font-size:12px; color:var(--color-text-secondary); }
+.client-service-panel .workflow-step-actions { position:sticky; bottom:-16px; z-index:3; display:flex; margin:16px -16px -16px; padding:14px 16px; background:white; border-top:1px solid var(--color-border); box-shadow:0 -5px 12px rgba(30,40,60,.025); }
+.client-service-panel .workflow-step-actions .ant-space-item > span { font-size:12px; color:var(--color-text-secondary); }
+.client-service-panel .workflow-fields { gap:12px; }
+.client-service-panel .communication-advice { padding:14px; margin:14px 0; font-size:13px; line-height:1.8; }
+.workflow-record { font-size:13px; }
+.client-service-panel .workflow-fields label { font-size:13px; color:var(--color-text-secondary); }
+.client-service-panel .workflow-inline-dialog .ant-radio-group { display:flex; flex-direction:column; gap:8px; }
+.client-service-panel .material-row { gap:8px; padding:10px 0; }
+.client-service-panel .material-row .ant-checkbox-wrapper { font-size:13px; }
+.client-service-panel .ant-btn-primary { background:#5751ff; border-color:#5751ff; box-shadow:none; }
+.client-service-panel .ant-btn-primary:disabled,
+.client-service-panel .ant-btn-primary.ant-btn-disabled { color:#a4a8b2 !important; background:#f1f2f4 !important; border-color:#e1e3e8 !important; box-shadow:none !important; }
+.client-service-panel .ant-btn-primary:not(:disabled):hover,
+.client-service-panel .ant-btn-primary:not(:disabled):focus { background:#4842e6; border-color:#4842e6; }
+.client-service-panel .ant-btn-link { color:#5751ff; }
+.client-service-panel .ant-btn-link:not(:disabled):hover { color:#4842e6; }
+.client-service-panel .ant-steps-item-process .ant-steps-item-icon { background:#5751ff; border-color:#5751ff; }
+.client-service-panel .ant-steps-item-finish .ant-steps-item-icon { border-color:#5751ff; }
+.client-service-panel .ant-steps-item-finish .ant-steps-icon { color:#5751ff; }
+.client-service-panel .ant-steps-item-finish .ant-steps-item-tail::after { background:#aaa7ff; }
+.client-service-panel .ant-spin-dot-item { background:#5751ff; }
+.client-service-panel .ant-radio-wrapper:hover .ant-radio-inner,
+.client-service-panel .ant-radio:hover .ant-radio-inner,
+.client-service-panel .ant-radio-input:focus + .ant-radio-inner { border-color:#5751ff; }
+.client-service-panel .ant-radio-checked .ant-radio-inner { background:#5751ff; border-color:#5751ff; }
+.client-service-panel .ant-input:hover,
+.client-service-panel .ant-select:not(.ant-select-disabled):hover .ant-select-selector { border-color:#7772ff; }
+.client-service-panel .ant-input:focus,
+.client-service-panel .ant-input-focused,
+.client-service-panel .ant-select-focused:not(.ant-select-disabled) .ant-select-selector { border-color:#5751ff !important; box-shadow:0 0 0 2px rgba(87,81,255,.12) !important; }
+@media(min-width:1180px) {
+  .has-service-panel .client-allocation-layout { grid-template-columns:140px minmax(120px,1fr); gap:12px; }
+  .has-service-panel .client-allocation-donut { width:140px; height:140px; }
+  .has-service-panel .client-allocation-donut::after { inset:22px; }
+  .has-service-panel .client-allocation-donut strong { font-size:15px; }
+}
+@media(max-width:1380px) {
+  .risk-list-description { flex-wrap:wrap; }
+  .risk-list-title { flex-wrap:wrap; gap:6px; }
+  .risk-alert-row { grid-template-columns:32px minmax(150px,1fr) 100px 72px; gap:10px; }
+  .risk-avatar.ant-avatar { width:32px !important; height:32px !important; }
+  .risk-impact strong { font-size:17px; }
+  .metric-card .ant-card-body { padding:4px 16px; gap:10px; }
+  .metric-card strong { font-size:21px; }
+}
+@media(prefers-reduced-motion:reduce) {
+  *, *::before, *::after { scroll-behavior:auto !important; transition:none !important; animation:none !important; }
+}
